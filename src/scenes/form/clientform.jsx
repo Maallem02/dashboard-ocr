@@ -4,7 +4,7 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 
-const Form = () => {
+const Clientform = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = (values) => {
@@ -13,7 +13,7 @@ const Form = () => {
 
   return (
     <Box m="20px">
-      <Header title="CREATE USER" subtitle="Create a New User Profile" />
+      <Header title="ADD NEW CLIENT" subtitle="Create a New client profile" />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -57,7 +57,7 @@ const Form = () => {
                 label="Last Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.lastName}
+                value={values.name}
                 name="lastName"
                 error={!!touched.lastName && !!errors.lastName}
                 helperText={touched.lastName && errors.lastName}
@@ -70,39 +70,52 @@ const Form = () => {
                 label="Email"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.email}
+                value={values.city}
                 name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
+                error={!!touched.city && !!errors.city}
+                helperText={touched.city && errors.city}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="login"
+                label="occupation"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.contact}
+                value={values.occupation}
                 name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
+                error={!!touched.occupation && !!errors.occupation}
+                helperText={touched.occupation && errors.occupation}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="mot de passe "
+                label="birth date"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.address1}
+                value={values.birth_date}
                 name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
+                error={!!touched.birth_date && !!errors.birth_date}
+                helperText={touched.birth_date && errors.birth_date}
                 sx={{ gridColumn: "span 4" }}
               />
-              
+            
+               <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="ID number"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.id_num}
+                name="address2"
+                error={!!touched.id_num && !!errors.id_num}
+                helperText={touched.id_num && errors.id_num}
+                sx={{ gridColumn: "span 4" }}
+              />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
@@ -139,4 +152,4 @@ const initialValues = {
   address2: "",
 };
 
-export default Form;
+export default Clientform;

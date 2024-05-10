@@ -21,11 +21,11 @@ const Contacts = () => {
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
     { field: "name", headerName: "Name", flex: 1 },
-    { field: "first_name", headerName: "First Name", flex: 1 },
+    { field: "f_name", headerName: "First Name", flex: 1 },
     { field: "city", headerName: "City", flex: 1 },
     { field: "occupation", headerName: "Occupation", flex: 1 },
-    { field: "birthDate", headerName: "Birth Date", flex: 1 },
-    { field: "ID_Number", headerName: "ID Number", flex: 1 },
+    { field: "birth_date", headerName: "Birth Date", flex: 1 },
+    { field: "id_num", headerName: "ID Number", flex: 1 },
   ];
 
   return (

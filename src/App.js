@@ -15,6 +15,7 @@ import Pie from "./scenes/pie";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
+import Clientform from "./scenes/form/clientform";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -36,6 +37,7 @@ function App() {
               <Route path="/form" element={<Form />} />
               <Route path="/bar" element={<Bar />} />
               <Route path="/pie" element={<Pie />} />
+              <Route path="/clientform" element={<Clientform />} />
               <Route path="/line" element={<Line />} />
               <Route path="/calendar" element={<Calendar />} />
               
