@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 
 const UserForm = () => {
@@ -11,6 +11,7 @@ const UserForm = () => {
     email: "",
   });
   const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false); // State to track form submission status
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,6 +31,7 @@ const UserForm = () => {
       );
       console.log(response.data); // Log the response from the server
       // Handle any success behavior here, such as showing a success message or redirecting the user
+      setSubmitted(true); // Set the submitted state to true after successful form submission
     } catch (error) {
       console.error("Error submitting form:", error);
       // Handle any error response from the server here
@@ -105,6 +107,11 @@ const UserForm = () => {
           {submitting ? "Submitting..." : "Submit"}
         </Button>
       </form>
+      {submitted && ( // Render message only if the form has been submitted
+        <Typography variant="body1" style={{ marginTop: "20px" }}>
+          Form submitted successfully!
+        </Typography>
+      )}
     </Box>
   );
 };
