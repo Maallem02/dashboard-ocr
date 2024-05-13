@@ -1,12 +1,15 @@
-
-import { Box } from "@mui/material";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Box, IconButton } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import React from 'react';
-import { useQuery } from 'react-query';
-import axios from 'axios';
+import EditTeamForm from './EditTeamForm'; // Import the EditTeamForm component
+import { useQuery, queryCache } from 'react-query';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { useMutation } from 'react-query';
 
 const Team = () => {
   const theme = useTheme();
@@ -19,6 +22,35 @@ const Team = () => {
     )
   );
 
+  const deleteClient = useMutation(
+    id => axios.delete(`http://localhost:5000/user/${id}`),
+    {
+      onSuccess: () => {
+        queryCache.invalidateQueries('TeamData');
+      }
+    }
+  );
+
+  const [editingRow, setEditingRow] = useState(null);
+
+  const handleEdit = (row) => {
+    setEditingRow(row);
+  };
+
+  const handleSaveEdit = async (editedData) => {
+    try {
+      await axios.put(`http://localhost:5000/user/${editedData.id_user}`, editedData);
+      queryCache.invalidateQueries('TeamData');
+      setEditingRow(null);
+    } catch (error) {
+      console.error('Error updating team member:', error);
+    }
+  };
+
+  const handleDelete = (id) => {
+    deleteClient.mutate(id);
+  };
+
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error fetching data</p>;
 
@@ -26,7 +58,30 @@ const Team = () => {
     { field: "id_user", headerName: "ID", flex: 0.5 },
     { field: "name", headerName: "Name", flex: 1 },
     { field: "f_name", headerName: "First Name", flex: 1 },
-    { field: "email", headerName: "email", flex: 1 },
+    { field: "email", headerName: "Email", flex: 1 },
+    {
+      field: "actions",
+      headerName: "Actions",
+      flex: 0.5,
+      renderCell: (params) => (
+        <Box>
+          <IconButton
+            onClick={() => handleEdit(params.row)}
+            color="primary"
+            aria-label="edit"
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            onClick={() => handleDelete(params.row.id_user)}
+            color="secondary"
+            aria-label="delete"
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Box>
+      )
+    }
   ];
 
   return (
@@ -35,6 +90,12 @@ const Team = () => {
         title="LIST OF TEAM"
         subtitle="THIS IS OUR TEAM DATA"
       />
+      {editingRow && (
+        <EditTeamForm
+          rowData={editingRow}
+          onSave={handleSaveEdit}
+        />
+      )}
       <Box
         m="10px 0 0 0"
         height="75vh"
